@@ -28,29 +28,32 @@ include ('database.php');
 $sql = "SELECT name, id, course, grade FROM students_detailed";
 $res = mysqli_query($con, $sql);
 
-if ($res) {
-  echo "<tr>
-          <th>name</th>
-          <th>id</th>
-          <th>course</th>
-          <th>grade</th>
-         </tr>";
+if ($res && mysqli_num_rows($res) > 0) {
+    echo "<table class='table table-striped'>";
+    echo "<thead><tr>
+            <th>Name</th>
+            <th>ID</th>
+            <th>Course</th>
+            <th>Grade</th>
+          </tr></thead><tbody>";
 while($row = mysqli_fetch_assoc($res)){
-  echo "<tr>
-          <br>
-          <td>" . $row['name'] . "</td>  
-          <td>" . $row['id'] . "</td>
-          <td>" . $row['course'] . "</td> 
-          <td>" . $row['grade'] . "</td>
-          <br> 
-      </tr>";
-} 
-
+    echo "<tr>
+    <td>" . htmlspecialchars($row['name']) . "</td>
+    <td>" . htmlspecialchars($row['id']) . "</td>
+    <td>" . htmlspecialchars($row['course']) . "</td>
+    <td>" . htmlspecialchars($row['grade']) . "</td>
+  </tr>";
 }
+echo "</tbody></table>";
+} else {
+    echo "<p>No records found.</p>";
+}
+
+mysqli_close($con);
 ?>
 </div>
     <footer>
-        <p>PHP Dynamic Website</p>
+        <p>© 2024 Dynamic Web Development</p>
     </footer>
 </body>
 </html>
